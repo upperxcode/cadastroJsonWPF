@@ -1,0 +1,151 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         x:Class="_CadastroJson.MainWindow"
+        mc:Ignorable="d"
+        Title="Pessoa" Height="450" Width="1000" MinWidth="1000" MinHeight="450"
+        Loaded="WindowLoaded"
+     
+    >
+
+
+    <Window.Resources>
+        <Image x:Key="FilterIcon" Margin="2,2,2,2" Source="Assets/Images/filter.png" Cursor="Hand"/>
+        
+        <Style x:Key="NavButton" TargetType="{x:Type Button}" BasedOn="{x:Null}">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="2,0,2,0"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style x:Key="LabelStyle" TargetType="{x:Type Label}" BasedOn="{x:Null}">
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="2,0,2,0"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="24"/>
+        </Style>
+        <Style x:Key="BorderStyle" TargetType="{x:Type Border}">
+            <Setter Property="BorderBrush" Value="SlateBlue"/>
+            <Setter Property="Margin" Value="5,5,5,5"/>
+            <Setter Property="BorderThickness" Value="2,2,2,2"/>
+            <Setter Property="Background" Value="AliceBlue"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="CornerRadius" Value="10"/>
+        </Style>
+        <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="0,0,2,0"/>
+        </Style>
+    </Window.Resources>
+       <WrapPanel>
+        <Border Style="{StaticResource BorderStyle}">
+            <StackPanel Width="450">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        
+                        <Label Style="{StaticResource LabelStyle}" Content="Lista de Pessoas"/>
+                        <Separator Width="10" Visibility="Hidden"/>
+                        <Label Style="{StaticResource LabelStyle}" Content="Nome: "/>
+                        <TextBox x:Name="txtFilterNome" Margin="0,5,0,5" Width="90" Text="{Binding TextSearch,UpdateSourceTrigger=PropertyChanged}" />
+                        <Label Style="{StaticResource LabelStyle}" Content="Cpf: "/>
+                        <TextBox x:Name="txtFilterCpf" Margin="0,5,0,5" Width="90" Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Separator Width="5" Visibility="Hidden"></Separator>
+                        <Button x:Name="BntFilter" Margin="0,5,0,5" Width="25" Click="BntFilter_Click">
+                            <StaticResource ResourceKey="FilterIcon"/>
+                        </Button>
+                    </StackPanel>
+                    <DataGrid Height="150" x:Name="PessoaGrid" IsReadOnly="True" AutoGenerateColumns="False" SelectionChanged="PessoaGrid_SelectionChanged" SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" Binding="{Binding ID}" Width="30"/>
+                            <DataGridTextColumn Header="Nome" Binding="{Binding Nome}"  Width="120"/>
+                            <DataGridTextColumn Header="Cpf" Binding="{Binding Cpf}"  Width="70"/>
+                            <DataGridTextColumn Header="Endereço" Binding="{Binding Endereco}"/>
+                            <DataGridTemplateColumn Header="Editar">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ToggleButton x:Name="btnEdit" Content="Edit" Click="BtnUpdate"></ToggleButton>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Excluir">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ToggleButton x:Name="btnExcluir" Background="Maroon" Content="Excluir" Click="BtnRemove"></ToggleButton>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label Style="{StaticResource LabelStyle}" Content="ID"/>
+                    <TextBox x:Name="txtId" IsReadOnly="True"/>
+                    <Label Style="{StaticResource LabelStyle}" Content="Nome"/>
+                    <TextBox x:Name="txtNome"/>
+                    <Label Style="{StaticResource LabelStyle}" Content="Cpf"/>
+                    <TextBox x:Name="txtCpf"/>
+                    <Label Style="{StaticResource LabelStyle}" Content="Endereço"/>
+                    <TextBox x:Name="txtEndereco"/>
+                    <Separator Height="10" Visibility="Hidden"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Novo" Click="BtnInsert" Style="{StaticResource NavButton}"/>
+                        <Button x:Name="SaveBtn" Content="Salvar" Click="BtnSave" Style="{StaticResource NavButton}"/>
+                        <Separator Width="40" Visibility="Hidden" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Border>        
+        <Border Style="{StaticResource BorderStyle}">
+            <StackPanel Orientation="Vertical" Width="480">
+                <Label Style="{StaticResource LabelStyle}" Content="Lista de Pedidos"/>
+                <DataGrid x:Name="PedidoGrid" Height="320"  IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Single">
+                    
+                    <DataGrid.Columns>
+                    <DataGridTextColumn Header="Data Venda" Binding="{Binding DataVenda, StringFormat=\{0:dd.MM.yyyy\}}" Width="80"/>
+                        <DataGridTextColumn Header="Vlr Total"  Width="100" Binding="{Binding ValorTotal, StringFormat={}{0:#.#0}, ConverterCulture=pt-BR }" ElementStyle="{StaticResource RightCell}"/>
+                    <DataGridTextColumn Header="F. Pagamento" Binding="{Binding FormaPagamento}"  Width="80"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}"  Width="80"/>
+                       
+                        <DataGridTemplateColumn Header="Pago">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ToggleButton x:Name="btnPago" Content="pago" Click="UpdateStatusPedido"></ToggleButton>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    
+                        <DataGridTemplateColumn Header="Enviado">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ToggleButton x:Name="btnEnviado" Content="enviado" Click="UpdateStatusPedido"></ToggleButton>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    
+                        <DataGridTemplateColumn Header="Recebido">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ToggleButton x:Name="btnRecebido" Content="recebido" Click="UpdateStatusPedido"></ToggleButton>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    
+                </DataGrid>
+                <Separator Height="5" Visibility="Hidden"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Pedidos" Click="ShowPedido" Style="{StaticResource NavButton}"/>
+                </StackPanel>
+            </StackPanel>
+            
+        </Border>
+    </WrapPanel>
+</Window>
+
+
+    

@@ -1,0 +1,9 @@
+[
+ {"ID":1,"Nome":"CPU","Codigo":"13322","Valor":1245},
+ {"ID":2,"Nome":"Placa","Codigo":"334202","Valor":1245},
+ {"ID":3,"Nome":"Memória","Codigo":"3213252","Valor":5245},
+ {"ID":4,"Nome":"Pendrive","Codigo":"7673652","Valor":515},
+ {"ID":5,"Nome":"HD","Codigo":"321320652","Valor":145},
+ {"ID":6,"Nome":"SSD","Codigo":"54353202","Valor":125},
+]
+

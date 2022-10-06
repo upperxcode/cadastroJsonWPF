@@ -1,0 +1,10 @@
+﻿<Application x:Class="_CadastroJson.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:_CadastroJson"
+             xmlns:custom="clr-namespace:_CadastroJson.Presentation.Components"
+             StartupUri="Presentation/MainWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
